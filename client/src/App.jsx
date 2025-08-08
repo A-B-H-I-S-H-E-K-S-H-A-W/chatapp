@@ -1,13 +1,11 @@
 import { useState } from "react";
 import "./styles/globals.css";
+import WhatsAppInterface from "./pages/WhatsAppInterface";
 
 function App() {
-
   return (
     <>
-      <div>
-        <p className="">Hello</p>
-      </div>
+      <WhatsAppInterface />
     </>
   );
 }
