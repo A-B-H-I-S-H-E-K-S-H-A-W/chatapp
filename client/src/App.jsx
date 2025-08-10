@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import WelcomePage from "./pages/WelcomePage";
 import "./styles/globals.css";
 import LoginPage from "./pages/LoginPage";
+import OtpPage from "./pages/OtpPage";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
         <Routes>
           <Route path="/" element={<WelcomePage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/otp" element={<OtpPage />} />
         </Routes>
       </BrowserRouter>
     </>
