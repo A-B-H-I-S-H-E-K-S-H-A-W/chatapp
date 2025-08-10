@@ -1,5 +1,5 @@
-import React from "react";
 import Button from "../components/Button";
+import { Link } from "react-router-dom";
 
 const WelcomePage = () => {
   return (
@@ -7,9 +7,7 @@ const WelcomePage = () => {
       <div className="h-screen w-full bg-background">
         <div className="flex flex-col gap-10 justify-center items-center h-full">
           <div className="">
-            <h1 className="text-primary text-5xl font-bold">
-              Welcome to Chatsapp
-            </h1>
+            <h1 className="h1">Welcome to Chatsapp</h1>
           </div>
           <div>
             <img
@@ -25,7 +23,9 @@ const WelcomePage = () => {
             </p>
           </div>
           <div>
-            <Button>Tap to continue</Button>
+            <Link to={"/login"}>
+              <Button className={""}>Tap to continue</Button>
+            </Link>
           </div>
         </div>
       </div>
