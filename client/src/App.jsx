@@ -1,10 +1,10 @@
+import WelcomePage from "./pages/WelcomePage";
 import "./styles/globals.css";
-import WhatsAppInterface from "./pages/WhatsAppInterface";
 
 function App() {
   return (
     <>
-      <WhatsAppInterface />
+      <WelcomePage />
     </>
   );
 }

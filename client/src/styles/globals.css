@@ -1,1 +1,25 @@
 @import "tailwindcss";
+
+@theme inline {
+  /* Colors */
+  --color-background: #dad7cd;
+  --color-foreground: #000000;
+
+  --color-primary: #588157;
+  --color-primary-foreground: #ffffff;
+
+  --color-secondary: #008000;
+  --color-secondary-foreground: #ffffff;
+
+  --color-accent: #38b000;
+  --color-accent-foreground: #70e000;
+
+  --color-destructive: #344e41;
+}
+
+/* Base styles */
+@layer base {
+  body {
+    @apply bg-background text-foreground;
+  }
+}
