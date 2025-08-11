@@ -1,11 +1,19 @@
 import { useState } from "react";
 import Button from "../components/Button";
+import { useCounterStore } from "../store/store";
+import { useNavigate } from "react-router-dom";
+
+const setNmber = (number) => {
+  useCounterStore.setState({ number: number });
+};
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({
     callingCode: 0,
     number: 0,
   });
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -16,7 +24,13 @@ const LoginPage = () => {
   };
 
   const handleSubmit = () => {
-    console.log(formData);
+    let number = "";
+
+    for (let key in formData) {
+      number += formData[key];
+    }
+    setNmber(number);
+    navigate("/otp");
   };
 
   return (

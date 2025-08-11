@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Button from "../components/Button";
+import { useCounterStore } from "../store/store";
 
 const OtpPage = () => {
   const [formData, setFormData] = useState({
@@ -18,6 +19,7 @@ const OtpPage = () => {
   const handleSubmit = () => {
     console.log(formData);
   };
+  const phoneNumber = useCounterStore((state) => state.number);
 
   return (
     <>
@@ -31,8 +33,8 @@ const OtpPage = () => {
           </div>
           <div className="max-w-lg text-center">
             <p>
-              We have sent the 6-character OTP to number. Please enter the code
-              below to continue
+              We have sent the 6-character OTP to {phoneNumber}. Please enter
+              the code below to continue
             </p>
           </div>
           <div className="flex items-center gap-2 bg-white p-2 rounded-xl shadow-md">
