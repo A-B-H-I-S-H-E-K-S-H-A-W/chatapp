@@ -1,12 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../components/Button";
 import { useCounterStore } from "../store/store";
 
 const OtpPage = () => {
   const [formData, setFormData] = useState({
-    callingCode: 0,
-    number: 0,
+    otp: 0,
   });
+  const [timer, setTimer] = useState(90);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,13 +19,36 @@ const OtpPage = () => {
   const handleSubmit = () => {
     console.log(formData);
   };
+
+  const otpGenerator = () => {
+    const otp = Math.floor(100000 + Math.random() * 900000);
+    useCounterStore.setState({ otp: otp });
+  };
+
   const phoneNumber = useCounterStore((state) => state.number);
+  const otp = useCounterStore((state) => state.otp);
+
+  useEffect(() => {
+    if (timer <= 0) return;
+    const timeOut = setTimeout(() => {
+      setTimer((prevVal) => prevVal - 1);
+    }, 1000);
+
+    return () => clearTimeout(timeOut);
+  }, [timer]);
+
+  useEffect(() => {
+    otpGenerator();
+  }, []);
+
+  let minutes = Math.floor(timer / 60);
+  let seconds = timer % 60;
 
   return (
     <>
       <div className="h-screen w-full bg-background">
         <div className="pt-20 text-center">
-          <h1 className="h1">Chatsapp</h1>
+          <h1 className="h1">Chatsapp {otp}</h1>
         </div>
         <div className="flex flex-col items-center gap-10 mt-20 px-20 py-10 bg-white max-w-2xl mx-auto rounded-2xl">
           <div>
@@ -33,8 +56,15 @@ const OtpPage = () => {
           </div>
           <div className="max-w-lg text-center">
             <p>
-              We have sent the 6-character OTP to {phoneNumber}. Please enter
-              the code below to continue
+              We have sent the 6-character OTP to{" "}
+              <span className="font-bold">{phoneNumber}</span>. Please enter the
+              code below to continue.
+            </p>
+            <p>
+              You can resend OTP after{" "}
+              <span className="font-bold">
+                {minutes}:{seconds}
+              </span>
             </p>
           </div>
           <div className="flex items-center gap-2 bg-white p-2 rounded-xl shadow-md">
@@ -49,10 +79,15 @@ const OtpPage = () => {
 
           <div className="">
             <p className="p inline">Did'nt recieve the OTP</p>
-            <span className="text-secondary font-semibold cursor-pointer">
-              {" "}
-              Click here
-            </span>
+            {timer === 0 && (
+              <span
+                onClick={() => setTimer(90)}
+                className="text-secondary font-semibold cursor-pointer"
+              >
+                {" "}
+                Click here
+              </span>
+            )}
           </div>
           <div>
             <Button onClick={handleSubmit}>Next</Button>

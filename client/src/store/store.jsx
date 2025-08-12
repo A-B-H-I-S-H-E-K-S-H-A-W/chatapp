@@ -3,6 +3,7 @@ import { create } from "zustand";
 export const useCounterStore = create((set) => ({
   number: "",
   count: 0,
+  otp: 0,
   increment: () => {
     set((state) => ({ count: state.count + 1 }));
   },
