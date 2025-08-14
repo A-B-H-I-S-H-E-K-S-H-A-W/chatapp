@@ -1,18 +1,14 @@
 import mongoose from "mongoose";
+import { DB_NAME } from "../constants.js";
 
-const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/chatapp";
-
-async function connectDB() {
+const mongoDBConnection = async () => {
   try {
-    await mongoose.connect(MONGO_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    console.log("MongoDB connected");
+    const connect = mongoose.connect(`${process.env.MONGODB_URI}/${DB_NAME}`);
+    return connect;
   } catch (error) {
-    console.error("MongoDB connection error:", error);
+    console.log("Database Connection Error: ", error);
     throw error;
   }
-}
+};
 
-export default connectDB;
+export { mongoDBConnection };
