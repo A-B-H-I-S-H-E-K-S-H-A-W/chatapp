@@ -1,14 +1,12 @@
-import { sendSMS } from "../service/messenging.js";
+import { sendOtpEmail } from "../service/email.js";
 
 export async function login(req, res) {
-  const { number, otp } = req.body;
+  const { email, otp } = req.body;
 
-  if (number && otp) {
-    console.log(number, otp);
+  if (email && otp) {
+    console.log(email, otp);
 
-    const message = `Your OTP for th chatapp is ${otp}. Dont share this OTP with anyone`;
-
-    const result = await sendSMS(number, message);
+    const result = await sendOtpEmail(email, otp);
 
     if (result.success) {
       return res.status(200).json(result);
@@ -16,9 +14,9 @@ export async function login(req, res) {
       return res.status(400).json(result);
     }
   } else {
-    console.log("Invalid number or otp");
+    console.log("Invalid email or otp");
     return {
-      message: "Invalid number",
+      message: "Invalid email",
       success: false,
     };
   }
