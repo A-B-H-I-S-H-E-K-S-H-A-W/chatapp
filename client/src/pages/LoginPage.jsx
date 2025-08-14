@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../components/Button";
 import { useCounterStore } from "../store/store";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const setNmber = (number) => {
   useCounterStore.setState({ number: number });
@@ -23,13 +24,27 @@ const LoginPage = () => {
     }));
   };
 
-  const handleSubmit = () => {
-    let number = "";
+  const handleSubmit = async () => {
+    const otp = Math.floor(100000 + Math.random() * 900000);
+    useCounterStore.setState({ otp: otp });
+
+    let refNumber = "+";
 
     for (let key in formData) {
-      number += formData[key];
+      refNumber += formData[key];
     }
-    setNmber(number);
+    setNmber(refNumber);
+
+    try {
+      const res = await axios.post("http://localhost:8000/auth/v1/login", {
+        number: refNumber,
+        otp: otp,
+      });
+
+      console.log("Response send", res.data);
+    } catch (error) {
+      console.log(error);
+    }
     navigate("/otp");
   };
 

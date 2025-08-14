@@ -20,13 +20,7 @@ const OtpPage = () => {
     console.log(formData);
   };
 
-  const otpGenerator = () => {
-    const otp = Math.floor(100000 + Math.random() * 900000);
-    useCounterStore.setState({ otp: otp });
-  };
-
   const phoneNumber = useCounterStore((state) => state.number);
-  const otp = useCounterStore((state) => state.otp);
 
   useEffect(() => {
     if (timer <= 0) return;
@@ -37,10 +31,6 @@ const OtpPage = () => {
     return () => clearTimeout(timeOut);
   }, [timer]);
 
-  useEffect(() => {
-    otpGenerator();
-  }, []);
-
   let minutes = Math.floor(timer / 60);
   let seconds = timer % 60;
 
@@ -48,7 +38,7 @@ const OtpPage = () => {
     <>
       <div className="h-screen w-full bg-background">
         <div className="pt-20 text-center">
-          <h1 className="h1">Chatsapp {otp}</h1>
+          <h1 className="h1">Chatsapp</h1>
         </div>
         <div className="flex flex-col items-center gap-10 mt-20 px-20 py-10 bg-white max-w-2xl mx-auto rounded-2xl">
           <div>
