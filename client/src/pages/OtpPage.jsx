@@ -21,6 +21,7 @@ const OtpPage = () => {
   };
 
   const email = useCounterStore((state) => state.email);
+  const sendOtp = useCounterStore((state) => state.sendOtp);
 
   useEffect(() => {
     if (timer <= 0) return;
@@ -30,6 +31,13 @@ const OtpPage = () => {
 
     return () => clearTimeout(timeOut);
   }, [timer]);
+
+  const resend = () => {
+    if (!email) {
+      console.log("email not found");
+    }
+    sendOtp(email);
+  };
 
   let minutes = Math.floor(timer / 60);
   let seconds = timer % 60;
@@ -71,7 +79,10 @@ const OtpPage = () => {
             <p className="p inline">Did'nt recieve the OTP</p>
             {timer === 0 && (
               <span
-                onClick={() => setTimer(90)}
+                onClick={() => {
+                  setTimer(90);
+                  resend();
+                }}
                 className="text-secondary font-semibold cursor-pointer"
               >
                 {" "}

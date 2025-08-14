@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const LoginPage = () => {
+  const sendOtp = useCounterStore((state) => state.sendOtp);
   const [formData, setFormData] = useState({
     email: "",
   });
@@ -29,12 +30,7 @@ const LoginPage = () => {
     setEmail(formData.email);
 
     try {
-      const res = await axios.post("http://localhost:8000/auth/v1/login", {
-        email: formData.email,
-        otp: otp,
-      });
-
-      console.log("Response send", res.data);
+      await sendOtp(formData.email);
     } catch (error) {
       console.log(error);
     }

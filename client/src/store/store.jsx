@@ -1,17 +1,23 @@
+import axios from "axios";
 import { create } from "zustand";
 
 export const useCounterStore = create((set) => ({
   email: "",
-  count: 0,
   otp: 0,
-  increment: () => {
-    set((state) => ({ count: state.count + 1 }));
-  },
-  incrementAsync: async () => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    set((state) => ({ count: state.count + 1 }));
-  },
-  decrement: () => {
-    set((state) => ({ count: state.count - 1 }));
+  sendOtp: async (email) => {
+    const otp = Math.floor(100000 + Math.random() * 900000);
+
+    try {
+      await axios.post("/api/auth/v1/login", {
+        email,
+        otp,
+      });
+
+      set({ otp, email });
+      console.log("OTP sent successfully");
+    } catch (error) {
+      console.error("Error sending OTP:", error);
+      throw error;
+    }
   },
 }));
