@@ -38,5 +38,8 @@ export async function sendOtpEmail(to, otp, expiryMinutes = 10) {
 
   const info = await transporter.sendMail(emailOptions);
   console.log(`OTP email sent to ${to}:`, info.messageId);
-  return info;
+  return {
+    message: "Email sent successfully",
+    success: true,
+  };
 }
