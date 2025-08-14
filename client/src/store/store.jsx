@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
 export const useCounterStore = create((set) => ({
-  number: "",
+  email: "",
   count: 0,
   otp: 0,
   increment: () => {

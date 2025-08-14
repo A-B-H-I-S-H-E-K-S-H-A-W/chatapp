@@ -20,7 +20,7 @@ const OtpPage = () => {
     console.log(formData);
   };
 
-  const phoneNumber = useCounterStore((state) => state.number);
+  const email = useCounterStore((state) => state.email);
 
   useEffect(() => {
     if (timer <= 0) return;
@@ -47,8 +47,8 @@ const OtpPage = () => {
           <div className="max-w-lg text-center">
             <p>
               We have sent the 6-character OTP to{" "}
-              <span className="font-bold">{phoneNumber}</span>. Please enter the
-              code below to continue.
+              <span className="font-bold">{email}</span>. Please enter the code
+              below to continue.
             </p>
             <p>
               You can resend OTP after{" "}
