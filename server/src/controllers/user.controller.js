@@ -35,7 +35,7 @@ export async function register(req, res) {
 
 export async function setUsername(req, res) {
   try {
-    const { username, email } = req.body;
+    const { username, fullName, email } = req.body;
 
     const user = await User.findOne({ email });
     if (!user) {
@@ -45,6 +45,7 @@ export async function setUsername(req, res) {
     }
 
     user.username = username;
+    user.fullName = fullName;
     await user.save();
 
     console.log("Username set successfully");
