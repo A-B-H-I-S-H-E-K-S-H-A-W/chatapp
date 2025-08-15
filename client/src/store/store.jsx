@@ -8,7 +8,7 @@ export const useCounterStore = create(
       email: "",
       otp: 0,
       token: "",
-      result: {},
+      result: null,
       sendOtp: async (email) => {
         const otp = Math.floor(100000 + Math.random() * 900000).toString();
 

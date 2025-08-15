@@ -23,7 +23,7 @@ const OtpPage = () => {
 
   const handleSubmit = async () => {
     try {
-      const result = await verifyOtp(email, formData.otp);
+      const res = await verifyOtp(email, formData.otp);
 
       navigate("/profile-setup");
     } catch (error) {
