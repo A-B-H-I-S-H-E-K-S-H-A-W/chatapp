@@ -15,7 +15,14 @@ function App() {
           <Route path="/" element={<WelcomePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/otp" element={<OtpPage />} />
-          <Route path="/profile-setup" element={<ProfileSetup />} />
+          <Route
+            path="/profile-setup"
+            element={
+              <ProtectedRoute redirectTo="/login">
+                <ProfileSetup />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/home"
             element={

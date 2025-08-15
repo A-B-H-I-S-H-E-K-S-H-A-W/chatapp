@@ -38,7 +38,7 @@ const ProfileSetup = () => {
       <div className="h-screen w-full bg-background">
         <div className="flex flex-col gap-10 justify-center items-center h-full">
           <div className="">
-            <h1 className="h2">Setup your profile {email}</h1>
+            <h1 className="h2">Setup your profile</h1>
           </div>
           <div>
             <img
