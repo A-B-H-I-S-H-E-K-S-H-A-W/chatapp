@@ -4,6 +4,7 @@ import { create } from "zustand";
 export const useCounterStore = create((set) => ({
   email: "",
   otp: 0,
+  token: "",
   result: {},
   sendOtp: async (email) => {
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
@@ -26,6 +27,10 @@ export const useCounterStore = create((set) => ({
     try {
       const res = await axios.post("/api/auth/v1/verify", { email, otp });
       console.log("User verified");
+      if (res.data.success && res.data.token) {
+        set({ token: res.data.token });
+        localStorage.setItem("userToken", res.data.token);
+      }
       set({ result: res.data });
     } catch (error) {
       console.error("Error verifying user:", error);
@@ -39,10 +44,18 @@ export const useCounterStore = create((set) => ({
   },
   setUsername: async (email, username) => {
     try {
-      const res = await axios.post("/api/user/set-username", {
-        email,
-        username,
-      });
+      const res = await axios.post(
+        "/api/user/set-username",
+        {
+          email,
+          username,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+          },
+        }
+      );
       console.log("Username set");
       set({ result: res.data });
       return res.data;
