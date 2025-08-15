@@ -7,6 +7,9 @@ const OtpPage = () => {
     otp: 0,
   });
   const [timer, setTimer] = useState(90);
+  const email = useCounterStore((state) => state.email);
+  const sendOtp = useCounterStore((state) => state.sendOtp);
+  const verifyOtp = useCounterStore((state) => state.verifyOtp);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -16,12 +19,14 @@ const OtpPage = () => {
     }));
   };
 
-  const handleSubmit = () => {
-    console.log(formData);
+  const handleSubmit = async () => {
+    try {
+      const result = await verifyOtp(email, formData.otp);
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
   };
-
-  const email = useCounterStore((state) => state.email);
-  const sendOtp = useCounterStore((state) => state.sendOtp);
 
   useEffect(() => {
     if (timer <= 0) return;

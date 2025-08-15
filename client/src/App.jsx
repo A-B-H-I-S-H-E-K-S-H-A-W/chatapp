@@ -12,6 +12,7 @@ function App() {
           <Route path="/" element={<WelcomePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/otp" element={<OtpPage />} />
+          <Route path="/profile-setup" element={<OtpPage />} />
         </Routes>
       </BrowserRouter>
     </>

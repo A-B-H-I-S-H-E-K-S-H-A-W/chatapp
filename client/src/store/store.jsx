@@ -4,20 +4,37 @@ import { create } from "zustand";
 export const useCounterStore = create((set) => ({
   email: "",
   otp: 0,
+  result: {},
   sendOtp: async (email) => {
-    const otp = Math.floor(100000 + Math.random() * 900000);
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
 
     try {
-      await axios.post("/api/auth/v1/login", {
-        email,
-        otp,
-      });
-
-      set({ otp, email });
+      const res = await axios.post("/api/auth/v1/login", { email, otp });
+      set({ otp, email, result: res.data });
       console.log("OTP sent successfully");
     } catch (error) {
       console.error("Error sending OTP:", error);
-      throw error;
+      set({
+        result: error.response?.data || {
+          message: "Network error",
+          success: false,
+        },
+      });
+    }
+  },
+  verifyOtp: async (email, otp) => {
+    try {
+      const res = await axios.post("/api/auth/v1/verify", { email, otp });
+      console.log("User verified");
+      set({ result: res.data });
+    } catch (error) {
+      console.error("Error verifying user:", error);
+      set({
+        result: error.response?.data || {
+          message: "Network error",
+          success: false,
+        },
+      });
     }
   },
 }));
