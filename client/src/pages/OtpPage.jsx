@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Button from "../components/Button";
 import { useCounterStore } from "../store/store";
+import { useNavigate } from "react-router-dom";
 
 const OtpPage = () => {
   const [formData, setFormData] = useState({
@@ -10,6 +11,7 @@ const OtpPage = () => {
   const email = useCounterStore((state) => state.email);
   const sendOtp = useCounterStore((state) => state.sendOtp);
   const verifyOtp = useCounterStore((state) => state.verifyOtp);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,7 +24,8 @@ const OtpPage = () => {
   const handleSubmit = async () => {
     try {
       const result = await verifyOtp(email, formData.otp);
-      console.log(result);
+
+      navigate("/profile-setup");
     } catch (error) {
       console.log(error);
     }

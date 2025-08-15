@@ -37,4 +37,23 @@ export const useCounterStore = create((set) => ({
       });
     }
   },
+  setUsername: async (email, username) => {
+    try {
+      const res = await axios.post("/api/user/set-username", {
+        email,
+        username,
+      });
+      console.log("Username set");
+      set({ result: res.data });
+      return res.data;
+    } catch (error) {
+      console.error("Error setting username:", error);
+      const data = error.response?.data || {
+        message: "Network error",
+        success: false,
+      };
+      set({ result: data });
+      return data;
+    }
+  },
 }));
