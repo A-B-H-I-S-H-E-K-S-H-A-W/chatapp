@@ -45,7 +45,7 @@ export const useCounterStore = create(
           });
         }
       },
-      setUsername: async (email, username) => {
+      setUsername: async (email, username, fullName) => {
         try {
           const token = useCounterStore.getState().token;
           const res = await axios.post(
@@ -53,6 +53,7 @@ export const useCounterStore = create(
             {
               email,
               username,
+              fullName,
             },
             {
               headers: {
