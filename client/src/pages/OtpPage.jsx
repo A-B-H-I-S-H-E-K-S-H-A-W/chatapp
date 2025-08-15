@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Button from "../components/Button";
 import { useCounterStore } from "../store/store";
 import { useNavigate } from "react-router-dom";
+import ButtonLoader from "../components/ui/Loading";
 
 const OtpPage = () => {
   const [formData, setFormData] = useState({
@@ -11,6 +12,7 @@ const OtpPage = () => {
   const email = useCounterStore((state) => state.email);
   const sendOtp = useCounterStore((state) => state.sendOtp);
   const verifyOtp = useCounterStore((state) => state.verifyOtp);
+  const loading = useCounterStore((state) => state.loading);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -23,11 +25,14 @@ const OtpPage = () => {
 
   const handleSubmit = async () => {
     try {
+      useCounterStore.setState({ loading: true });
       const res = await verifyOtp(email, formData.otp);
 
       navigate("/profile-setup");
     } catch (error) {
       console.log(error);
+    } finally {
+      useCounterStore.setState({ loading: false });
     }
   };
 
@@ -99,7 +104,13 @@ const OtpPage = () => {
             )}
           </div>
           <div>
-            <Button onClick={handleSubmit}>Next</Button>
+            <Button
+              disabled={loading}
+              className={`${loading ? "bg-secondary" : "bg-accent"}`}
+              onClick={handleSubmit}
+            >
+              {loading ? <ButtonLoader /> : "Next"}
+            </Button>
           </div>
         </div>
       </div>

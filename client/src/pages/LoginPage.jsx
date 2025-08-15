@@ -3,6 +3,7 @@ import Button from "../components/Button";
 import { useCounterStore } from "../store/store";
 import { useNavigate } from "react-router-dom";
 import Alert from "../components/ui/Alert";
+import ButtonLoader from "../components/ui/Loading";
 
 const LoginPage = () => {
   const sendOtp = useCounterStore((state) => state.sendOtp);
@@ -11,7 +12,10 @@ const LoginPage = () => {
   });
   const navigate = useNavigate();
   const [type, setType] = useState("");
-  const [message, setMessage] = useState("Enter you email address");
+  const [message, setMessage] = useState(
+    "Enter you email address: someone@example.com"
+  );
+  const loading = useCounterStore((state) => state.loading);
 
   const setEmail = (email) => {
     useCounterStore.setState({ email: email });
@@ -26,22 +30,25 @@ const LoginPage = () => {
   };
 
   const handleSubmit = async () => {
-    if (!formData.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
-      setMessage("Enter a valid email address");
-      setType("error");
-      return;
-    }
-
-    const otp = Math.floor(100000 + Math.random() * 900000);
-    useCounterStore.setState({ otp: otp });
-    setEmail(formData.email);
-
     try {
+      useCounterStore.setState({ loading: true });
+      if (!formData.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+        setMessage("Enter a valid email address");
+        setType("error");
+        return;
+      }
+
+      const otp = Math.floor(100000 + Math.random() * 900000);
+      useCounterStore.setState({ otp: otp });
+      setEmail(formData.email);
+
       await sendOtp(formData.email);
+      navigate("/otp");
     } catch (error) {
       console.log(error);
+    } finally {
+      useCounterStore.setState({ loading: false });
     }
-    navigate("/otp");
   };
 
   return (
@@ -71,7 +78,13 @@ const LoginPage = () => {
             <Alert message={message} type={type} />
           </div>
           <div>
-            <Button onClick={handleSubmit}>Next</Button>
+            <Button
+              disabled={loading}
+              className={`${loading ? "bg-secondary" : "bg-accent"}`}
+              onClick={handleSubmit}
+            >
+              {loading ? <ButtonLoader /> : "Next"}
+            </Button>
           </div>
         </div>
       </div>

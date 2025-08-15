@@ -2,6 +2,7 @@ import { useState } from "react";
 import Button from "../components/Button";
 import { useCounterStore } from "../store/store";
 import { useNavigate } from "react-router-dom";
+import ButtonLoader from "../components/ui/Loading";
 
 const ProfileSetup = () => {
   const [formData, setFormData] = useState({
@@ -10,6 +11,7 @@ const ProfileSetup = () => {
   });
   const email = useCounterStore((state) => state.email);
   const setUsername = useCounterStore((state) => state.setUsername);
+  const loading = useCounterStore((state) => state.loading);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -21,6 +23,7 @@ const ProfileSetup = () => {
   };
 
   const handleSubmit = async () => {
+    useCounterStore.setState({ loading: true });
     try {
       const result = await setUsername(
         email,
@@ -35,6 +38,8 @@ const ProfileSetup = () => {
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      useCounterStore.setState({ loading: false });
     }
   };
 
@@ -71,8 +76,12 @@ const ProfileSetup = () => {
             />
           </div>
           <div>
-            <Button onClick={handleSubmit} className={""}>
-              Tap to continue
+            <Button
+              disabled={loading}
+              className={`${loading ? "bg-secondary" : "bg-accent"}`}
+              onClick={handleSubmit}
+            >
+              {loading ? <ButtonLoader /> : "Tap to continue"}
             </Button>
           </div>
         </div>
