@@ -30,22 +30,29 @@ export const useCounterStore = create(
       verifyOtp: async (email, otp) => {
         try {
           const res = await axios.post("/api/auth/v1/verify", { email, otp });
-          console.log("User verified");
+
           if (res.data.success && res.data.token) {
             set({ token: res.data.token });
             localStorage.setItem("userToken", res.data.token);
           }
+
           set({ result: res.data });
+          return res.data;
         } catch (error) {
-          console.error("Error verifying user:", error);
+          const backendError = error.response?.data;
+          console.error("Error verifying user:", backendError || error.message);
+
           set({
-            result: error.response?.data || {
+            result: backendError || {
               message: "Network error",
               success: false,
             },
           });
+
+          return backendError;
         }
       },
+
       setUsername: async (email, username, fullName) => {
         try {
           const token = useCounterStore.getState().token;

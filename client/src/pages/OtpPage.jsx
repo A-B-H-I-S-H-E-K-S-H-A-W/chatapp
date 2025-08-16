@@ -4,6 +4,7 @@ import { useCounterStore } from "../store/store";
 import { useNavigate } from "react-router-dom";
 import ButtonLoader from "../components/ui/Loading";
 import loginbg from "../assets/background.jpg";
+import Alert from "../components/ui/Alert";
 
 const OtpPage = () => {
   const [formData, setFormData] = useState({
@@ -14,6 +15,8 @@ const OtpPage = () => {
   const sendOtp = useCounterStore((state) => state.sendOtp);
   const verifyOtp = useCounterStore((state) => state.verifyOtp);
   const loading = useCounterStore((state) => state.loading);
+  const [type, setType] = useState("");
+  const [message, setMessage] = useState("Enter OTP");
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -29,7 +32,14 @@ const OtpPage = () => {
       useCounterStore.setState({ loading: true });
       const res = await verifyOtp(email, formData.otp);
 
-      navigate("/profile-setup");
+      console.log(res);
+
+      if (res?.success === true) {
+        navigate("/profile-setup");
+      } else {
+        setMessage(res.message);
+        setType("error");
+      }
     } catch (error) {
       console.log(error);
     } finally {
@@ -80,14 +90,15 @@ const OtpPage = () => {
                 </span>
               </p>
             </div>
-            <div className="flex items-center gap-2 bg-white p-2 rounded-xl shadow-md">
+            <div className="bg-white px-3 py-2 rounded-xl shadow-lg border-1">
               <input
                 name="otp"
-                type="number"
-                className="flex-1 px-3 py-2 rounded-lg focus:outline-none"
+                type="email"
+                className="py-2 w-md rounded-lg focus:outline-none"
                 placeholder="6 digit OTP"
                 onChange={handleChange}
               />
+              <Alert message={message} type={type} />
             </div>
 
             <div className="">
