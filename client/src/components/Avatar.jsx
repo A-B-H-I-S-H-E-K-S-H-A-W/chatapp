@@ -16,13 +16,13 @@ export const Avatar = ({
   return (
     <div className="relative">
       <div
-        className={`${size} rounded-full overflow-hidden bg-gray-300 flex items-center justify-center`}
+        className={`${size} rounded-full overflow-hidden bg-background/80 flex items-center justify-center`}
       >
         {src ? (
           <img src={src} alt={name} className="w-full h-full object-cover" />
         ) : (
           <span
-            className={`text-white font-medium ${
+            className={`text-background font-medium ${
               size.includes("12") ? "text-lg" : "text-sm"
             }`}
           >
@@ -31,7 +31,7 @@ export const Avatar = ({
         )}
       </div>
       {online && (
-        <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></div>
+        <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-500 border-2 border-background rounded-full"></div>
       )}
     </div>
   );

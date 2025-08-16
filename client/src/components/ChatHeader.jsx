@@ -5,7 +5,7 @@ export const ChatHeader = ({ contact }) => {
   if (!contact) return null;
 
   return (
-    <div className="bg-gray-100 px-4 py-3 flex items-center justify-between border-b">
+    <div className="bg-secondary/30 px-4 py-3 flex items-center justify-between border-b border-primary">
       <div className="flex items-center">
         <Avatar
           src={contact.avatar}
@@ -14,8 +14,10 @@ export const ChatHeader = ({ contact }) => {
           isGroup={contact.isGroup}
         />
         <div className="ml-3">
-          <h3 className="text-sm font-medium text-gray-900">{contact.name}</h3>
-          <p className="text-xs text-gray-600">
+          <h3 className="text-sm font-medium text-foreground/80">
+            {contact.name}
+          </h3>
+          <p className="text-xs text-foreground/60">
             {contact.online ? "Online" : "Last seen recently"}
           </p>
         </div>

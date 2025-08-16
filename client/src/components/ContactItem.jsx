@@ -11,8 +11,8 @@ export const ContactItem = ({
 
   return (
     <div
-      className={`flex items-center px-4 py-3 hover:bg-gray-100 cursor-pointer ${
-        isSelected ? "bg-gray-200" : ""
+      className={`flex items-center px-4 py-3 hover:bg-primary/30 cursor-pointer ${
+        isSelected ? "bg-primary/20" : ""
       }`}
       onClick={onClick}
     >
@@ -34,7 +34,7 @@ export const ContactItem = ({
         <div className="flex justify-between items-center mt-1">
           <p className="text-sm text-gray-600 truncate">{lastMessage}</p>
           {contact.unreadCount > 0 && (
-            <span className="bg-green-500 text-white text-xs rounded-full px-2 py-0.5 ml-2 flex-shrink-0">
+            <span className="bg-primary text-white text-xs rounded-full px-2 py-0.5 ml-2 flex-shrink-0">
               {contact.unreadCount}
             </span>
           )}
