@@ -34,30 +34,26 @@ export async function sendOtp(req, res) {
 }
 
 export async function verify(req, res, next) {
-  const { otp, email } = req.body;
-
-  if (!email || !otp) {
-    return res.status(400).json({
-      message: "Invalid OTP",
-      success: false,
-    });
-  }
-
   try {
+    const { otp, email } = req.body;
+    console.log(otp, email);
+
+    if (!email || !otp) {
+      return res.status(400).json({
+        message: "OTP and valid email required",
+        success: false,
+      });
+    }
     const verifyuser = await AuthVerification.findOne({ email });
 
-    console.log(verifyuser.otp, otp);
-
-    if (!verifyuser) {
-      return res.status(404).json({
-        message: "User not found",
+    if (verifyuser?.otp === null) {
+      return res.status(400).json({
+        message: "OTP not found",
         success: false,
       });
     }
 
-    console.log(verifyuser.otp, otp);
-
-    if (verifyuser.otp.toString() !== otp.toString()) {
+    if (verifyuser.otp?.toString() !== otp.toString()) {
       return res.status(400).json({
         message: "OTP not matched",
         success: false,
