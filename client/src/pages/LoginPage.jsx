@@ -4,6 +4,7 @@ import { useCounterStore } from "../store/store";
 import { useNavigate } from "react-router-dom";
 import Alert from "../components/ui/Alert";
 import ButtonLoader from "../components/ui/Loading";
+import loginbg from "../assets/background.jpg";
 
 const LoginPage = () => {
   const sendOtp = useCounterStore((state) => state.sendOtp);
@@ -54,37 +55,42 @@ const LoginPage = () => {
   return (
     <>
       <div className="h-screen w-full bg-background">
-        <div className="pt-20 text-center">
-          <h1 className="h1">Chatsapp</h1>
-        </div>
-        <div className="flex flex-col items-center gap-10 mt-20 px-20 py-10 bg-white max-w-3xl mx-auto rounded-2xl">
-          <div>
-            <h2 className="h3">Enter your email address</h2>
+        <div className="grid md:grid-cols-2 grid-cols-1">
+          <div className="flex flex-col items-center gap-10 py-20 bg-white h-full w-full mx-auto rounded-r-xl">
+            <div className="pt-20 text-center">
+              <h1 className="h1">Chatsapp</h1>
+            </div>
+            <div>
+              <h2 className="h3">Enter your email address</h2>
+            </div>
+            <div className="max-w-lg text-center">
+              <p>
+                Whatsapp will need to verify your email address. Carrier charges
+                may apply. What's my phone number
+              </p>
+            </div>
+            <div className="bg-white px-3 py-2 rounded-xl shadow-lg border-1">
+              <input
+                name="email"
+                type="email"
+                className="py-2 w-lg rounded-lg focus:outline-none"
+                placeholder="Email Address"
+                onChange={handleChange}
+              />
+              <Alert message={message} type={type} />
+            </div>
+            <div>
+              <Button
+                disabled={loading}
+                className={`${loading ? "bg-secondary" : "bg-accent"}`}
+                onClick={handleSubmit}
+              >
+                {loading ? <ButtonLoader /> : "Next"}
+              </Button>
+            </div>
           </div>
-          <div className="max-w-lg text-center">
-            <p>
-              Whatsapp will need to verify your email address. Carrier charges
-              may apply. What's my phone number
-            </p>
-          </div>
-          <div className="bg-white px-3 py-2 rounded-xl shadow-lg border-1">
-            <input
-              name="email"
-              type="email"
-              className="py-2 w-lg rounded-lg focus:outline-none"
-              placeholder="Email Address"
-              onChange={handleChange}
-            />
-            <Alert message={message} type={type} />
-          </div>
-          <div>
-            <Button
-              disabled={loading}
-              className={`${loading ? "bg-secondary" : "bg-accent"}`}
-              onClick={handleSubmit}
-            >
-              {loading ? <ButtonLoader /> : "Next"}
-            </Button>
+          <div className="">
+            <img className="h-screen w-full" src={loginbg} alt="img" />
           </div>
         </div>
       </div>

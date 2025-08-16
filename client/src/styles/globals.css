@@ -2,19 +2,19 @@
 
 @theme inline {
   /* Colors */
-  --color-background: #dad7cd;
+  --color-background: #fefae0;
   --color-foreground: #000000;
 
-  --color-primary: #588157;
+  --color-primary: #dda15e;
   --color-primary-foreground: #ffffff;
 
-  --color-secondary: #008000;
+  --color-secondary: #bc6c25;
   --color-secondary-foreground: #ffffff;
 
-  --color-accent: #38b000;
+  --color-accent: #f6bd60;
   --color-accent-foreground: #70e000;
 
-  --color-destructive: #344e41;
+  --color-destructive: #283618;
 }
 
 /* Base styles */
